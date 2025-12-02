@@ -1,5 +1,3 @@
-import math
-
 from collections.abc import Callable
 
 class Bisect:
@@ -27,7 +25,6 @@ class Bisect:
             return b
         
         if self.f(a)*self.f(b) > 0:
-            self.__debug(f"{a}, {b}, {self.f(a)}, {self.f(b)}")
             self.__debug("Roots don't exist at that interval.")
             return None
         
@@ -104,4 +101,5 @@ class Bisect:
         print(f"[{self.__n}] {message}")
 
 f1 = Bisect(lambda x: x**2 - 4*x + 3, [0, 5], display_process=True)
+
 print(f1.get_roots())
