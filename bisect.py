@@ -38,7 +38,6 @@ class Bisect:
             return right
         
         if self.f(left)*self.f(right) > 0:
-            self.__debug(f"{left}, {right}, {self.f(left)}, {self.f(right)}")
             self.__debug("Roots don't exist at that interval.")
             return None
         
