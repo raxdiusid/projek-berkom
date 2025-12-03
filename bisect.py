@@ -2,13 +2,13 @@ from typing import Callable, Union, Optional
 
 class Bisect:
     def __init__(self, f: Callable, interval: list, display_process: bool=False) -> None:
-        self.f: Callable = f
-        self.interval: list = interval
-        self.display_process: bool = display_process
-        self.__convergence: Union[int, float] = 10**-5
-        self.__roots: list = []
-        self.__potential_roots: list = self._identify_roots(interval[0], interval[1], npartition=100)
-        self.__n: int = 0
+        self.f                : Callable          = f
+        self.interval         : list              = interval
+        self.display_process  : bool              = display_process
+        self.__convergence    : Union[int, float] = 10**-5
+        self.__roots          : list              = []
+        self.__potential_roots: list              = self._identify_roots(interval[0], interval[1], npartition=100)
+        self.__n              : int               = 0
 
         for potential_root in self.__potential_roots:
             self.__roots.append(self.bisect(potential_root[0], potential_root[1]))
@@ -30,15 +30,15 @@ class Bisect:
             Fungsi ini akan mengembalikan None, int, atau float.
         """
         if self.f(left) == 0:
-            self.__debug(f"A root is found at x={left}")
+            self.__debug(f"Akar ditemukan pada x={left}")
             return left
             
         if self.f(right) == 0:
-            self.__debug(f"A root is found at x={right}")
+            self.__debug(f"Akar ditemukan pada x={right}")
             return right
         
         if self.f(left)*self.f(right) > 0:
-            self.__debug("Roots don't exist at that interval.")
+            self.__debug("Tidak ada akar dalam interval yang diberikan.")
             return None
         
         # Batas kiri interval
@@ -70,7 +70,7 @@ class Bisect:
 
             else:
                 # Kondisi di mana f(r)*f(a) == 0 terpenuhi, yang mana mengimplikasikan f(r) = 0
-                self.__debug(f"Root found x={mid}")
+                self.__debug(f"Akar ditemukan pada x={mid}")
                 return mid
             
             partition.append(mid)
@@ -82,7 +82,7 @@ class Bisect:
 
             i+=1
 
-        self.__debug(f"Approximated root is found at x={mid}")
+        self.__debug(f"Akar ditemukan pada x={mid}")
         return mid
     
     def _identify_roots(self, left: Union[int, float], right: Union[int, float], npartition: int=100) -> list:
@@ -132,8 +132,26 @@ class Bisect:
             return None
         print(f"[{self.__n}] {message}")
 
-f1 = Bisect(lambda x: x**2 - 4*x + 3, [0, 5], display_process=True)
-print(f1.get_roots()) # [1.0, 3.0]
+while True:
+    fungsi=input(">>> Masukan fungsi: ")
+    batas_kiri = float(input(">>> Masukkan batas kiri interval: "))
+    batas_kanan = float(input(">>> Masukkan batas kanan interval: "))
+    tampilkan_proses = True
+    while True:
+        tampilkan_proses = int(input(">>> Tampilkan proses? [1] Ya [2] Tidak: "))
+        if tampilkan_proses == 1:
+            tampilkan_proses = True
+            break
+        elif tampilkan_proses == 2:
+            tampilkan_proses = False
+            break
 
-f2 = Bisect(lambda x: 3*x**3 + 2*x**2-7*x+2, [-20, 20], display_process=True)
-print(f2.get_roots()) # [-2.0, 0.333, 0.99999]
+    f1 = Bisect(lambda x: eval(fungsi), [batas_kiri, batas_kanan], display_process=tampilkan_proses)
+    print(f"<<< Akar-akar dari fungsi tersebut adalah {", ".join(map(lambda akar: str(akar), f1.get_roots()))}")
+    while True:
+        ex = int(input(">>> Akhiri program? [1] Ya [2] Tidak: "))
+        if ex == 1:
+            exit()
+        else:
+            break
+    print("=========================")
