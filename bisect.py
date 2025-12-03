@@ -23,7 +23,7 @@ class Bisect:
         kriteria konvergensi.
 
         Args:
-            left: Batas kiri interval.
+            left : Batas kiri interval.
             right: Batas kanan interval.
 
         Returns:
@@ -90,8 +90,8 @@ class Bisect:
         Melakukan pengecekan interval potensi yang memuat akar dari sebuah fungsi.
 
         Args:
-            left: Batas kiri interval.
-            right: Batas kanan interval.
+            left      : Batas kiri interval.
+            right     : Batas kanan interval.
             npartition: Banyaknya partisi.
 
         Returns:
@@ -133,25 +133,31 @@ class Bisect:
         print(f"[{self.__n}] {message}")
 
 while True:
-    fungsi=input(">>> Masukan fungsi: ")
-    batas_kiri = float(input(">>> Masukkan batas kiri interval: "))
-    batas_kanan = float(input(">>> Masukkan batas kanan interval: "))
-    tampilkan_proses = True
-    while True:
-        tampilkan_proses = int(input(">>> Tampilkan proses? [1] Ya [2] Tidak: "))
-        if tampilkan_proses == 1:
-            tampilkan_proses = True
-            break
-        elif tampilkan_proses == 2:
-            tampilkan_proses = False
-            break
-
-    f1 = Bisect(lambda x: eval(fungsi), [batas_kiri, batas_kanan], display_process=tampilkan_proses)
-    print(f"<<< Akar-akar dari fungsi tersebut adalah {", ".join(map(lambda akar: str(akar), f1.get_roots()))}")
-    while True:
-        ex = int(input(">>> Akhiri program? [1] Ya [2] Tidak: "))
-        if ex == 1:
-            exit()
-        else:
-            break
     print("=========================")
+    try:
+        fungsi=input(">>> Masukan fungsi: ")
+        batas_kiri = float(input(">>> Masukkan batas kiri interval: "))
+        batas_kanan = float(input(">>> Masukkan batas kanan interval: "))
+        tampilkan_proses = True
+        while True:
+            tampilkan_proses = int(input(">>> Tampilkan proses? [1] Ya [2] Tidak: "))
+            if tampilkan_proses == 1:
+                tampilkan_proses = True
+                break
+            elif tampilkan_proses == 2:
+                tampilkan_proses = False
+                break
+
+        f1 = Bisect(lambda x: eval(fungsi), [batas_kiri, batas_kanan], display_process=tampilkan_proses)
+        if len(f1.get_roots()) == 0:
+            print("<<< Akar tidak ditemukan pada interval tersebut!")
+        else:
+            print(f"<<< Akar-akar dari {fungsi} adalah {", ".join(map(lambda akar: str(akar), f1.get_roots()))}")
+        while True:
+            ex = int(input(">>> Akhiri program? [1] Ya [2] Tidak: "))
+            if ex == 1:
+                exit()
+            else:
+                break
+    except Exception as e:
+        print(e)
